@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-plugin-name-activator.php
  */
 function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry-activator.php';
 	Plugin_Name_Activator::activate();
 }
 
@@ -40,7 +40,7 @@ function activate_plugin_name() {
  * This action is documented in includes/class-plugin-name-deactivator.php
  */
 function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry-deactivator.php';
 	Plugin_Name_Deactivator::deactivate();
 }
 
@@ -51,7 +51,7 @@ register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry.php';
 
 /**
  * Begins execution of the plugin.
@@ -66,6 +66,9 @@ function run_plugin_name() {
 
 	$plugin = new Plugin_Name();
 	$plugin->run();
+
+	wp_register_script( 'lt', ( 'http://learningtapestry.com/api/loader.api' ), false, null, true );
+  wp_enqueue_script( 'lt' );
 
 }
 run_plugin_name();
