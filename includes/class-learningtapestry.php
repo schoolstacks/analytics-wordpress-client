@@ -27,7 +27,7 @@
  * @subpackage Plugin_Name/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name {
+class LearningTapestry {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power

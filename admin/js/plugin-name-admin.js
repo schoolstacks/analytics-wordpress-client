@@ -29,4 +29,36 @@
 	 * be doing this, we should try to minimize doing that in our own work.
 	 */
 
+
+function onPlayerReady(event) {
+  var embedCode = event.target.getVideoEmbedCode();
+  event.target.playVideo();
+  if (document.getElementById('embed-code')) {
+    document.getElementById('embed-code').innerHTML = embedCode;
+  }
+}
+
+var params = {
+    allowScriptAccess: "always"
+};
+var atts = {
+    id: "myytplayer"
+};
+
+var video = swfobject.embedSWF("http://www.youtube.com/v/elvOZm0d4H0?enablejsapi=1&playerapiid=ytplayer&version=3&rel=0&autoplay=1&controls=1", "ytapiplayer", "450", "250", "8", null, null, params, atts);
+
+onYouTubePlayerReady = function (playerId) {
+    ytplayer = document.getElementById("myytplayer");
+    ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
+};
+
+onPlayerStateChange = function (state) {
+    if (state === 0) {
+        alert("Stack Overflow rocks!");
+    }
+};
+
+console.log("loaded");
+
+
 })( jQuery );

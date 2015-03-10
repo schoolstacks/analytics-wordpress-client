@@ -64,11 +64,16 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry.php';
  */
 function run_plugin_name() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new LearningTapestry();
 	$plugin->run();
 
-	wp_register_script( 'lt', ( 'http://learningtapestry.com/api/loader.api' ), false, null, true );
-  wp_enqueue_script( 'lt' );
+	add_action('wp_loaded', function() {
+		global $current_user;
+		wp_register_script('yt', 'http://www.youtube.com/player_api');
+	  wp_enqueue_script( 'yt' );
+		wp_register_script( 'lt', ( 'http://webdb01-ci.learningtapestry.com:8081/api/v1/loader.js?username=' . $current_user->ID . '&org_api_key=2866b962-a7be-44f8-9a0c-66502fba7d31&load=collector&autostart=true' ), false, null, true );
+	  wp_enqueue_script( 'lt' );
 
+	});
 }
 run_plugin_name();
