@@ -13,4 +13,8 @@
  */
 ?>
 
+Learning Tapestry Admin Display
+<title>Learning Tapestry Admin Display</title>
+
+
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
