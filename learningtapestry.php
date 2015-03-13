@@ -107,8 +107,6 @@ function learningtapestry_options() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
-
-
 	global $options;
 	print_r($options);
 
@@ -118,7 +116,7 @@ function learningtapestry_options() {
 		update_option("lt_org_api_key", $_POST["org_api_key"]);
 		$lt_org_api_key = $_POST["org_api_key"];
 	}
-	
+
 	if ( !$lt_org_api_key ) {
 	echo '<div class="error"><p>Learning Tapestry not configured.</p></div>';
 	}
@@ -126,10 +124,7 @@ function learningtapestry_options() {
 	echo '<div class="wrap">';
 	echo '<h2>Learning Tapestry Settings</h2>';
 	echo '<form id="learningtapestry_org_api_key" action="options-general.php?page=learningtapestry" method="post">';
-
-	echo 'Learning Tapestry Organization API Key: <input name="org_api_key" type="text" value="' . $lt_org_api_key . '"><br/><br/>';
-
-
+	echo 'Learning Tapestry Organization API Key: <input name="org_api_key" type="text" value="' . $lt_org_api_key . '">';
 	// echo &lt_key;
 	submit_button();
 	echo '</form>';
