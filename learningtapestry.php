@@ -78,8 +78,17 @@ function run_learningtapestry() {
 
 	add_action('wp_loaded', function() {
 		global $current_user;
-		wp_register_script( 'lt', ( 'http://webdb01-ci.learningtapestry.com:8081/api/v1/loader.js?username=' . $current_user->ID . '&org_api_key=2866b962-a7be-44f8-9a0c-66502fba7d31&load=collector&autostart=true' ), false, null, true );
-	  wp_enqueue_script( 'lt' );
+	  global $options;
+
+	  if (get_option("lt_org_api_key")) {
+			$lt_org_api_key = get_option("lt_org_api_key");
+			$lt_api_server = get_option("lt_api_server");
+			wp_register_script( 'lt', ( $lt_api_server . '/api/v1/loader.js?username=' . $current_user->ID . '&org_api_key=' . $lt_org_api_key . '&load=collector&autostart=true' ), false, null, true );
+		  wp_enqueue_script( 'lt' );
+	  } else {
+	  	echo '<div class="error"><p>Learning Tapestry not configured.</p></div>';
+	  }
+
 	  wp_register_script('d3', ( 'http://d3js.org/d3.v3.min.js' ) );
 	  wp_enqueue_script( 'd3' );
 	  wp_register_script('c3', ( 'http://cdnjs.cloudflare.com/ajax/libs/c3/0.4.9/c3.min.js' ) );
@@ -111,20 +120,24 @@ function learningtapestry_options() {
 	print_r($options);
 
 	$lt_org_api_key = get_option("lt_org_api_key");
+	$lt_api_server = get_option("lt_api_server");
 
 	if ( $_POST["org_api_key"] ) {
 		update_option("lt_org_api_key", $_POST["org_api_key"]);
 		$lt_org_api_key = $_POST["org_api_key"];
+		update_option("lt_api_server", $_POST["api_server"]);
+		$lt_api_server = $_POST["api_server"];
 	}
 
-	if ( !$lt_org_api_key ) {
+	if ( !$lt_org_api_key || !$lt_api_server) {
 	echo '<div class="error"><p>Learning Tapestry not configured.</p></div>';
 	}
 	
 	echo '<div class="wrap">';
 	echo '<h2>Learning Tapestry Settings</h2>';
-	echo '<form id="learningtapestry_org_api_key" action="options-general.php?page=learningtapestry" method="post">';
-	echo 'Learning Tapestry Organization API Key: <input name="org_api_key" type="text" value="' . $lt_org_api_key . '">';
+	echo '<br/><br/><br/><form id="learningtapestry_org_api_key" action="options-general.php?page=learningtapestry" method="post">';
+	echo 'Learning Tapestry API server: <br/><input style="width: 500px;" name="api_server" type="text" value="' . $lt_api_server . '"><br/><br/>';
+	echo 'Learning Tapestry Organization API Key: <br/><input style="width: 500px;" name="org_api_key" type="text" value="' . $lt_org_api_key . '"><br/><br/>';
 	// echo &lt_key;
 	submit_button();
 	echo '</form>';
