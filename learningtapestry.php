@@ -66,6 +66,36 @@ function example_dashboard_widget_function() {
 	}
 }
 
+function lt_youtube_monitor($buffer) {
+  $position = stripos($buffer, 'youtube.com/embed/');
+  while ($position !== false) {
+    $end_position = stripos($buffer, '"', $position);
+    $youtube_url = substr($buffer, $position, $end_position-$position);
+    $youtube_url = urldecode($youtube_url);
+    
+    if (stripos($youtube_url, 'enablejsapi') == false) {
+      if (stripos($youtube_url, '?') == false) {
+        $buffer = str_replace($youtube_url, $youtube_url . '?enablejsapi=1', $buffer);
+      } else {
+        $buffer = str_replace($youtube_url, $youtube_url . '&enablejsapi=1', $buffer);
+      }
+    } else { 
+       if (stripos($youtube_url, 'enablejsapi=0') !== false) {
+         $buffer = str_replace($youtube_url, str_replace('enablejsapi=0', 'enablejsapi=1', $youtube_url), $buffer);
+       }
+    } 
+    $position = strpos($buffer, 'youtube.com/embed/', $end_position);
+  }
+  return $buffer;
+}
+
+function out($string) {
+  do_action( 'add_debug_info', $string );
+}
+
+function buffer_start() { ob_start("lt_youtube_monitor"); }
+
+function buffer_end() { ob_end_flush(); }
 
 /**
  * Begins execution of the plugin.
@@ -99,18 +129,15 @@ function run_learningtapestry() {
 	});
 
 	add_action( 'wp_dashboard_setup', 'example_add_dashboard_widgets' );
-
-	/** Step 2 (from text above). */
 	add_action( 'admin_menu', 'my_plugin_menu' );
-
+        add_action( 'wp_head', 'buffer_start');
+        add_action( 'wp_footer', 'buffer_end');
 }
 
-/** Step 1. */
 function my_plugin_menu() {
 	add_options_page( 'Learning Tapestry', 'Learning Tapestry', 'manage_options', 'learningtapestry', 'learningtapestry_options' );
 }
 
-/** Step 3. */
 function learningtapestry_options() {
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
