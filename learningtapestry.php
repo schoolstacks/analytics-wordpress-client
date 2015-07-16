@@ -41,6 +41,10 @@ register_deactivation_hook( __FILE__, 'deactivate_learningtapestry' );
 
 require plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry.php';
 
+function out($string) {
+  do_action( 'add_debug_info', $string );
+}
+
 /**
  * Begins execution of the plugin.
  * @since    1.0.0
@@ -113,7 +117,6 @@ function learningtapestry_menu() {
 	add_options_page( 'Learning Tapestry', 'Learning Tapestry', 'manage_options', 'learningtapestry', 'learningtapestry_options' );
 }
 
-/** Step 3. */
 function learningtapestry_options() {
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
