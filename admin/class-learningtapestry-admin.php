@@ -1,26 +1,22 @@
 <?php
 
 /**
- * The admin-specific functionality of the plugin.
+ * @link              https://learningtapestry.com
+ * @since             1.0.0
+ * @package           Learning Tapestry for WordPress
  *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
+ * @wordpress-plugin
+ * Plugin Name:       Learning Tapestry for WordPress
+ * Plugin URI:        https://learningtapestry.com/plugins/wordpress
+ * Description:       Learning data and analytics for web users
+ * Version:           1.0.0
+ * Author:            Learning Tapestry, Inc.
+ * Author URI:        https://learningtapestry.com
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
- * @author     Your Name <email@example.com>
- */
-class Plugin_Name_Admin {
+class LearningTapestry_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -73,7 +69,7 @@ class Plugin_Name_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/learningtapestry-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +92,7 @@ class Plugin_Name_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/learningtapestry-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

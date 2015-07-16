@@ -11,12 +11,12 @@
  * @wordpress-plugin
  * Plugin Name:       Learning Tapestry for WordPress
  * Plugin URI:        https://learningtapestry.com/plugins/wordpress
- * Description:       Learning data and analytics for your web users
+ * Description:       Learning data and analytics for web users
  * Version:           1.0.0
  * Author:            Learning Tapestry, Inc.
  * Author URI:        https://learningtapestry.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       learningtapestry
  * Domain Path:       /languages
  */
@@ -26,46 +26,20 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-function activate_plugin_name() {
+function activate_learningtapestry() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry-activator.php';
 	Plugin_Name_Activator::activate();
 }
 
-function deactivate_plugin_name() {
+function deactivate_learningtapestry() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry-deactivator.php';
 	Plugin_Name_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_activation_hook( __FILE__, 'activate_learningtapestry' );
+register_deactivation_hook( __FILE__, 'deactivate_learningtapestry' );
 
 require plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry.php';
-
-function example_add_dashboard_widgets() {
-
-	wp_add_dashboard_widget(
-	         'example_dashboard_widget',         // Widget slug.
-	         'Page View Overall Display',         // Title.
-	         'example_dashboard_widget_function' // Display function.
-	);	
-}
-
-function example_dashboard_widget_function() {
-
-/*
-	$response = wp_remote_get('');
-	print_r $response;
-*/
-
-	$response = wp_remote_get('http://webdb01-ci.learningtapestry.com:8081/api/v1/getPageViewsSummary');
-	$rows = json_decode($response["body"]);
-
-	foreach ($rows as $row) {
-		echo $row->display_name;
-		echo '<br/>';
-	}
-}
-
 
 /**
  * Begins execution of the plugin.
@@ -89,24 +63,53 @@ function run_learningtapestry() {
 	  	echo '<div class="error"><p>Learning Tapestry not configured.</p></div>';
 	  }
 
-	  wp_register_script('d3', ( 'http://d3js.org/d3.v3.min.js' ) );
+	  // TODO: Enable these for graphing functions as part of 1.5
+	  /* wp_register_script('d3', ( 'http://d3js.org/d3.v3.min.js' ) );
 	  wp_enqueue_script( 'd3' );
 	  wp_register_script('c3', ( 'http://cdnjs.cloudflare.com/ajax/libs/c3/0.4.9/c3.min.js' ) );
 	  wp_enqueue_script( 'c3' );
-	  wp_register_script( 'youtube', 'http://www.youtube.com/iframe_api');
-	  wp_enqueue_script( 'youtube' );
+	  */
 
 	});
 
-	add_action( 'wp_dashboard_setup', 'example_add_dashboard_widgets' );
-
-	/** Step 2 (from text above). */
-	add_action( 'admin_menu', 'my_plugin_menu' );
-
+	add_action( 'admin_menu', 'learningtapestry_menu' );
+	add_action( 'wp_head', 'buffer_start');
+    add_action( 'wp_footer', 'buffer_end');
 }
 
+
+ // if a YouTube video has been placed in HTML, insert enablejsapi parameter necessary for analytics
+function lt_youtube_monitor($buffer) {
+  $position = stripos($buffer, 'youtube.com/embed/');
+  while ($position !== false) {
+    $end_position = stripos($buffer, '"', $position);
+    $youtube_url = substr($buffer, $position, $end_position-$position);
+    $youtube_url = urldecode($youtube_url);
+
+    if (stripos($youtube_url, 'enablejsapi') == false) {
+      if (stripos($youtube_url, '?') == false) {
+        $buffer = str_replace($youtube_url, $youtube_url . '?enablejsapi=1', $buffer);
+      } else {
+        $buffer = str_replace($youtube_url, $youtube_url . '&enablejsapi=1', $buffer);
+      }
+    } else {
+       if (stripos($youtube_url, 'enablejsapi=0') !== false) {
+         $buffer = str_replace($youtube_url, str_replace('enablejsapi=0', 'enablejsapi=1', $youtube_url), $buffer);
+       }
+    }
+    $position = strpos($buffer, 'youtube.com/embed/', $end_position);
+  }
+  return $buffer;
+}
+
+function buffer_start() { ob_start("lt_youtube_monitor"); }
+
+function buffer_end() { ob_end_flush(); }
+
+
+
 /** Step 1. */
-function my_plugin_menu() {
+function learningtapestry_menu() {
 	add_options_page( 'Learning Tapestry', 'Learning Tapestry', 'manage_options', 'learningtapestry', 'learningtapestry_options' );
 }
 

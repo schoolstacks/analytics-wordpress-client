@@ -1,26 +1,22 @@
 <?php
 
 /**
- * Fired during plugin activation
+ * @link              https://learningtapestry.com
+ * @since             1.0.0
+ * @package           Learning Tapestry for WordPress
  *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @wordpress-plugin
+ * Plugin Name:       Learning Tapestry for WordPress
+ * Plugin URI:        https://learningtapestry.com/plugins/wordpress
+ * Description:       Learning data and analytics for web users
+ * Version:           1.0.0
+ * Author:            Learning Tapestry, Inc.
+ * Author URI:        https://learningtapestry.com
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/**
- * Fired during plugin activation.
- *
- * This class defines all code necessary to run during the plugin's activation.
- *
- * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
- */
-class Plugin_Name_Activator {
+class LearningTapestry_Activator {
 
 	/**
 	 * Short Description. (use period)

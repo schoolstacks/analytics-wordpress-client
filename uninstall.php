@@ -1,28 +1,19 @@
 <?php
 
 /**
- * Fired when the plugin is uninstalled.
+ * @link              https://learningtapestry.com
+ * @since             1.0.0
+ * @package           Learning Tapestry for WordPress
  *
- * When populating this file, consider the following flow
- * of control:
- *
- * - This method should be static
- * - Check if the $_REQUEST content actually is the plugin name
- * - Run an admin referrer check to make sure it goes through authentication
- * - Verify the output of $_GET makes sense
- * - Repeat with other user roles. Best directly by using the links/query string parameters.
- * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
+ * @wordpress-plugin
+ * Plugin Name:       Learning Tapestry for WordPress
+ * Plugin URI:        https://learningtapestry.com/plugins/wordpress
+ * Description:       Learning data and analytics for web users
+ * Version:           1.0.0
+ * Author:            Learning Tapestry, Inc.
+ * Author URI:        https://learningtapestry.com
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  */
 
 // If uninstall not called from WordPress, then exit.

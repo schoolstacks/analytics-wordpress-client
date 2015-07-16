@@ -1,32 +1,21 @@
 <?php
 
 /**
- * The file that defines the core plugin class
+ * @link              https://learningtapestry.com
+ * @since             1.0.0
+ * @package           Learning Tapestry for WordPress
  *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @wordpress-plugin
+ * Plugin Name:       Learning Tapestry for WordPress
+ * Plugin URI:        https://learningtapestry.com/plugins/wordpress
+ * Description:       Learning data and analytics for web users
+ * Version:           1.0.0
+ * Author:            Learning Tapestry, Inc.
+ * Author URI:        https://learningtapestry.com
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
- * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
- */
 class LearningTapestry {
 
 	/**
@@ -68,7 +57,7 @@ class LearningTapestry {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'plugin-name';
+		$this->plugin_name = 'learningtapestry';
 		$this->version = '1.0.0';
 
 		$this->load_dependencies();
@@ -119,7 +108,7 @@ class LearningTapestry {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-learningtapestry-public.php';
 
-		$this->loader = new Plugin_Name_Loader();
+		$this->loader = new LearningTapestry_Loader();
 
 	}
 
@@ -134,7 +123,7 @@ class LearningTapestry {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Plugin_Name_i18n();
+		$plugin_i18n = new LearningTapestry_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
@@ -150,7 +139,7 @@ class LearningTapestry {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Plugin_Name_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new LearningTapestry_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
