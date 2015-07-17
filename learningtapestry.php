@@ -128,7 +128,7 @@ function learningtapestry_options() {
 	$lt_org_api_key = get_option("lt_org_api_key");
 	$lt_api_server = get_option("lt_api_server");
 
-	if ( $_POST["org_api_key"] ) {
+	if ( isset($_POST["org_api_key"]) ) {
 		update_option("lt_org_api_key", $_POST["org_api_key"]);
 		$lt_org_api_key = $_POST["org_api_key"];
 		update_option("lt_api_server", $_POST["api_server"]);
