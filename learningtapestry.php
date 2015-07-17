@@ -28,12 +28,12 @@ if ( ! defined( 'WPINC' ) ) {
 
 function activate_learningtapestry() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry-activator.php';
-	Plugin_Name_Activator::activate();
+	LearningTapestry_Activator::activate();
 }
 
 function deactivate_learningtapestry() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-learningtapestry-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+	LearningTapestry_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_learningtapestry' );
