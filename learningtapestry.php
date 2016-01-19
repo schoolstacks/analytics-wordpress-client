@@ -62,7 +62,7 @@ function run_learningtapestry() {
 			$lt_org_api_key = get_option("lt_org_api_key");
 			$lt_api_server = get_option("lt_api_server");
 			wp_register_script( 'lt', ( $lt_api_server . '/api/v1/loader.js?username=' . $current_user->ID . '&org_api_key=' . $lt_org_api_key . '&load=collector&autostart=true' ), false, null, true );
-		  wp_enqueue_script( 'lt' );
+		    wp_enqueue_script( 'lt' );
 	  } else {
 	  	echo '<div class="error"><p>Learning Tapestry not configured.</p></div>';
 	  }
